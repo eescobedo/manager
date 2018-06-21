@@ -10,6 +10,8 @@
 
         <form method="POST" action="/documents">
             {{ csrf_field() }}
+            <input type="hidden" name="format" value="0">
+            <input type="hidden" name="permissions" value="1">
 
             <div class="form-group">
                 <label for="title">T&iacute;tulo</label>

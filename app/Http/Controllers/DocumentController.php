@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use App\Repositories\Documents;
-use App\Repositories\Users;
+use PDF;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Validator;
+use App\Document;
+use App\Repositories\Users;
+use App\Repositories\Documents;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
@@ -109,6 +109,15 @@ class DocumentController extends Controller
         $this->user->modifyPublish(request());
 
         return response()->json(['status' => 'Document updated!']);
+    }
 
+    public function generate(Document $document)
+    {
+        $data = ['title' => $document->title, 'content' => $document->content];
+
+        $name = str_random(30) . '.pdf';
+        $pdf = PDF::loadView('document.pdfView', $data);
+
+        return $pdf->download($name);
     }
 }

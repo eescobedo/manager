@@ -30,3 +30,5 @@ Route::put('/documents', 'DocumentController@update')->name('update_document');
 
 Route::get('/tags', 'TagsController@index')->name('tags');
 
+Route::get('/documents/{document}/pdf', 'DocumentController@generate');
+

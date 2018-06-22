@@ -13892,6 +13892,9 @@ window.Vue = __webpack_require__(36);
  */
 
 Vue.component('example-component', __webpack_require__(39));
+// Vue.component('documents', require('./components/Documents.vue'));
+// Vue.component('document-form', require('./components/Document-form.vue'));
+// Vue.component('paginate', require('vuejs-paginate'));
 
 var app = new Vue({
   el: '#app'

@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-
 @section('content')
-
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
@@ -36,10 +34,10 @@
                         @include('layouts.errors')
                     </form>
                 </div>
-
                 <hr>
-
             </div>
         </div>
     </div>
+    <document-form></document-form>
 @endsection
+

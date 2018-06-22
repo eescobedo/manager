@@ -16,6 +16,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('documents', require('./components/Documents.vue'));
+// Vue.component('document-form', require('./components/Document-form.vue'));
+// Vue.component('paginate', require('vuejs-paginate'));
 
 const app = new Vue({
     el: '#app'

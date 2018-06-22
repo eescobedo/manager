@@ -16,11 +16,11 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('user_id');
-            $table->string('tags');
-            $table->integer('format');
+            $table->integer('user_id')->nullable();
+            $table->string('tags')->nullable();
+            $table->integer('format')->nullable();
             $table->text('content');
-            $table->integer('permissions');
+            $table->integer('permissions')->nullable();
 //            $table->integer('versions');
             $table->timestamps();
         });

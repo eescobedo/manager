@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('documents', 'Api\DocumentController')->only(['index', 'store', 'show']);
+
+Route::put('documents/{id}/version', 'Api\VersionDocument@update');

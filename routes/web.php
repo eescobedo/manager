@@ -15,9 +15,9 @@
 //    return view('welcome');
 //});
 
-Auth::routes();
-
 //Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
 
 Route::get('/', 'DocumentController@index')->name('home');
 

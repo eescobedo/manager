@@ -19,10 +19,12 @@ class CreateTagsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('document_tag', function (Blueprint $table) {
+        Schema::create('document_tags', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('document_id');
             $table->integer('tag_id');
-            $table->primary(['document_id', 'tag_id']);
+            $table->timestamps();
+//            $table->primary(['document_id', 'tag_id']);
         });
     }
 
@@ -34,6 +36,6 @@ class CreateTagsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('tags');
-        Schema::dropIfExists('document_tag');
+        Schema::dropIfExists('document_tags');
     }
 }

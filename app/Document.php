@@ -18,4 +18,11 @@ class Document extends Model
     {
         return $this->belongsTo(Tag::class);
     }
+
+    public function document_tags()
+    {
+        return $this->hasMany(DocumentTag::class);
+    }
+
+
 }

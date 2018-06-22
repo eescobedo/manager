@@ -38,16 +38,6 @@ class User extends Authenticatable
     public function publish(Document $document)
     {
         $result = $this->documents()->save($document);
-
-//        $document = Document::create([
-//            'title' => request('title'),
-//            'tags' => request('tags'),
-//            'content' => request('content'),
-//            'format' => 0,
-//            'author_id' => auth()->id(),
-//            'permissions' => 32,
-//        ]);
-
         return $result;
     }
 }

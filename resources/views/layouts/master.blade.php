@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/favicon.ico">
 
-    <title>Album example for Bootstrap</title>
+    <title>Document Manager</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -213,8 +213,8 @@
             {{--integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"--}}
             {{--crossorigin="anonymous"></script>--}}
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    {{--<script src="../../assets/js/vendor/holder.min.js"></script>--}}
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>--}}
+     {{--<script src="../../assets/js/vendor/holder.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
     {{--<script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>--}}
     {{--<script src="https://rawgit.com/twitter/typeahead.js/master/dist/bloodhound.min.js"></script>--}}
     {{--<script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>--}}

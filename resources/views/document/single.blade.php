@@ -5,6 +5,10 @@
                  data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text={{ $document->title }}"
                  alt="Card image cap">
             <div class="card-body">
+                @foreach($document->document_tags as $tag)
+                    <button type="button" class="btn btn-secondary btn-sm" disabled>{{ $tag->tag->name }}</button>
+                @endforeach
+                <div>&nbsp;</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -15,15 +19,3 @@
         </div>
     </a>
 </div>
-
-
-<!--<div class="panel panel-default" v-for="document in documents">-->
-<!--<div class="panel-heading">{ { document.title }}</div>-->
-
-<!--<div class="panel-body">-->
-<!--{!-- document.content --!}-->
-<!--</div>-->
-<!--<div class="panel-footer">-->
-<!--soy el footer-->
-<!--</div>-->
-<!--</div>-->

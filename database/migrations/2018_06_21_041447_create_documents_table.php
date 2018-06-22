@@ -17,11 +17,8 @@ class CreateDocumentsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('user_id')->nullable();
-            $table->string('tags')->nullable();
             $table->integer('format')->nullable();
             $table->text('content');
-            $table->integer('permissions')->nullable();
-//            $table->integer('versions');
             $table->timestamps();
         });
     }

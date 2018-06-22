@@ -21,11 +21,12 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="">
                                 <a href="/documents/{{$document->id}}/edit">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
+                                    <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                                </a>
+                                <a href="/documents/{{$document->id}}/pdf">
+                                    <button type="button" class="btn btn-primary btn-sm">Download PDF</button>
                                 </a>
                             </div>
                         </div>

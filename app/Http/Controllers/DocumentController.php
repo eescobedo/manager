@@ -3,36 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Repositories\Documents;
 use App\Version;
 use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
     /**
+     * @var Documents
+     */
+    private $documents;
+
+    /**
      * DocumentController constructor.
      */
-    public function __construct()
+    public function __construct(Documents $documents)
     {
         $this->middleware('auth');
+        $this->documents = $documents;
     }
 
     public function index()
     {
-        $documents = Document::where('user_id', '=', Auth::id())->latest()->get();
+        $documents = $this->documents->all(Auth::id());
 
         return view('document.index', compact('documents'));
     }
 
     public function show(Document $document) // Document:: find(wildcard);
     {
-//        dd ($document);
         return view('document.show', compact('document'));
     }
 
     public function create()
     {
-        $documents = Document::all();
-        return view('document.create', compact('documents'));
+        return view('document.create');
     }
 
     public function store()
@@ -43,35 +48,26 @@ class DocumentController extends Controller
             'content' => 'required'
         ]);
 
-//        dd (request());
         $document = auth()->user()->publish(
             new Document(request(['title', 'tags', 'content', 'format', 'permissions']))
         );
 
-//        dd ($document);
-
-//        $document = Document::create([
-//            'title' => request('title'),
-//            'tags' => request('tags'),
-//            'content' => request('content'),
-//            'format' => 0,
-//            'author_id' => Auth::id(),
-//            'permissions' => 32,
-//        ]);
-
-//        $versionNumber = Version::where('document_id', '=' , $document->id)->orderBy('id', 'desc')->take(1)->get();
-
-//        if ($versionNumber->isEmpty()){
-            Version::create([
-                'document_id' => $document->id,
-                'version' => 1
-            ]);
-//        }
-
-
-        // for include all parameters
-        // Document::create(request()->all());
+        Version::create([
+            'document_id' => $document->id,
+            'version' => 1
+        ]);
 
         return redirect('/');
+    }
+
+    public function edit(Document $document)
+    {
+        return view ('document.edit', compact('document'));
+
+    }
+
+    public function update()
+    {
+        dd (request());
     }
 }

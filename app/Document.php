@@ -13,4 +13,9 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsTo(Tag::class);
+    }
 }

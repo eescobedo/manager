@@ -20,10 +20,11 @@
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-
+                                <a href="/documents/{{$document->id}}/edit">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -32,3 +32,4 @@ Route::get('/tags', 'TagsController@index')->name('tags');
 
 Route::get('/documents/{document}/pdf', 'DocumentController@generate');
 
+Route::any('/search', 'SearchController@run')->name('search');

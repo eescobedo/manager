@@ -28,3 +28,5 @@ Route::get('/documents/{document}', 'DocumentController@show');
 Route::get('/documents/{document}/edit', 'DocumentController@edit');
 Route::put('/documents', 'DocumentController@update');
 
+Route::get('/tags', 'TagsController@index')->name('tags');
+

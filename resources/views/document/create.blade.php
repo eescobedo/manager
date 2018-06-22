@@ -20,8 +20,10 @@
                         </div>
                         <div class="form-group">
                             <label for="tags">Etiquetas</label>
-                            <input type="text" class="form-control" id="tags" placeholder="Etiquetas" name="tags">
+                            {{--<input type="text" class="form-control" id="tags"name="tags">--}}
+                            <div id="tags" class="tag-list"></div>
                         </div>
+
                         <div class="form-group">
                             <label for="content">Contenido</label>
                             <textarea class="form-control" id="content" placeholder="Contenido"
@@ -38,6 +40,17 @@
             </div>
         </div>
     </div>
-    <document-form></document-form>
-@endsection
 
+@endsection
+@section ('myjsscripts')
+    <script>
+        $(function() {
+            // If using Bootstrap 2, be sure to include:
+            // Tags.bootstrapVersion = "2";
+            $('#tags').tags({
+                tagData:["boilerplate", "tags"],
+//                excludeList:["not", "these", "words"]
+            });
+        });
+    </script>
+@endsection

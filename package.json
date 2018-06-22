@@ -23,6 +23,8 @@
         "type-ahead": "^2.1.0"
     },
     "dependencies": {
+        "bloodhound-js": "^1.2.2",
+        "corejs-typeahead": "^1.2.1",
         "vuejs-paginate": "^1.9.3"
     }
 }

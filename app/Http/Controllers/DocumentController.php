@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
-use Validator;
 use App\Document;
-use App\Repositories\Users;
 use App\Repositories\Documents;
+use App\Repositories\Users;
+use App\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class DocumentController extends Controller
 {
@@ -41,13 +42,6 @@ class DocumentController extends Controller
 
     public function show(Document $document) // Document:: find(wildcard);
     {
-//        echo '<pre>';
-//        foreach ($document->document_tags as $tag)
-//        {
-////            dd($tag->tag->name);
-//        }
-//        dd ('die');
-//        dd ($document->tags());
         return view('document.show', compact('document'));
     }
 
@@ -82,12 +76,39 @@ class DocumentController extends Controller
 
     public function edit(Document $document)
     {
-        return view('document.edit', compact('document'));
+        $newTags = [];
+        $myTags = [];
 
+        foreach ($document->document_tags as $tag) {
+            $myTags[] = $tag->tag->name;
+        }
+
+        $tags = Tag::latest()
+            ->whereNotIn('name', $myTags)
+            ->select('name')->get();
+
+        foreach ($tags as $tag) {
+            $newTags[] = $tag->name;
+        }
+
+        return view('document.edit', ['document' => $document, 'tags' => $myTags, 'newTags' => $newTags]);
     }
 
     public function update()
     {
-        dd(request());
+        $validator = Validator::make(request()->all(), [
+            'title' => 'required',
+            'tags' => 'required|array',
+            'content' => 'required'
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+
+        $this->user->modifyPublish(request());
+
+        return response()->json(['status' => 'Document updated!']);
+
     }
 }

@@ -22,11 +22,11 @@ Auth::routes();
 Route::get('/', 'DocumentController@index')->name('home');
 
 Route::get('/documents/create', 'DocumentController@create')->name('create_document');
-Route::post('/documents', 'DocumentController@store');
+Route::post('/documents', 'DocumentController@store')->name('publish_document');
 
-Route::get('/documents/{document}', 'DocumentController@show');
+Route::get('/documents/{document}', 'DocumentController@show')->name('show_document');
 Route::get('/documents/{document}/edit', 'DocumentController@edit');
-Route::put('/documents', 'DocumentController@update');
+Route::put('/documents', 'DocumentController@update')->name('update_document');
 
 Route::get('/tags', 'TagsController@index')->name('tags');
 

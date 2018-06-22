@@ -38,4 +38,18 @@ class Users
 
         return $document;
     }
+
+    public function modifyPublish(Request $request)
+    {
+        $document = Document::find($request['id']);
+        $document->title = $request['title'];
+        $document->content = $request['content'];
+        $document->save();
+
+        $this->versions->increment($document);
+
+        $this->tags->update($document, $request['tags']);
+        return $document;
+
+    }
 }

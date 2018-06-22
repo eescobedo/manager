@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Repositories\Documents;
+use App\Version;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
     /**
+     * @var Documents
+     */
+    private $documents;
+
+    /**
      * DocumentController constructor.
      */
-    public function __construct()
+    public function __construct(Documents $documents)
     {
         $this->middleware('auth');
+        $this->documents = $documents;
     }
 
     public function index()
     {
-        $documents = Document::latest()->get();
+        $documents = $this->documents->all(Auth::id());
 
         return view('document.index', compact('documents'));
     }
@@ -28,8 +37,7 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $documents = Document::all();
-        return view('document.create', compact('documents'));
+        return view('document.create');
     }
 
     public function store()
@@ -40,19 +48,26 @@ class DocumentController extends Controller
             'content' => 'required'
         ]);
 
-        Document::create([
-            'title' => request('title'),
-            'tags' => request('tags'),
-            'content' => request('content'),
-            'format' => 0,
-            'author_id' => 3,
-            'permissions' => 32,
-            'versions' => 322
+        $document = auth()->user()->publish(
+            new Document(request(['title', 'tags', 'content', 'format', 'permissions']))
+        );
+
+        Version::create([
+            'document_id' => $document->id,
+            'version' => 1
         ]);
 
-        // for include all parameters
-        // Document::create(request()->all());
-
         return redirect('/');
+    }
+
+    public function edit(Document $document)
+    {
+        return view ('document.edit', compact('document'));
+
+    }
+
+    public function update()
+    {
+        dd (request());
     }
 }

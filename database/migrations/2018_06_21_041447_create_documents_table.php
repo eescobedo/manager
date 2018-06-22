@@ -16,12 +16,12 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('author_id');
+            $table->integer('user_id');
             $table->string('tags');
             $table->integer('format');
             $table->text('content');
             $table->integer('permissions');
-            $table->integer('versions');
+//            $table->integer('versions');
             $table->timestamps();
         });
     }

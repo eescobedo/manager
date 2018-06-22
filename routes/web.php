@@ -11,17 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', 'DocumentController@index');
+Route::get('/', 'DocumentController@index')->name('home');
 
-Route::get('/documents/create', 'DocumentController@create');
+Route::get('/documents/create', 'DocumentController@create')->name('create_document');
 Route::post('/documents', 'DocumentController@store');
 
 Route::get('/documents/{document}', 'DocumentController@show');
+Route::get('/documents/{document}/edit', 'DocumentController@edit');
+Route::put('/documents', 'DocumentController@update');
+

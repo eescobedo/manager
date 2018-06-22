@@ -15,7 +15,11 @@ class CreateVersionsTable extends Migration
     {
         Schema::create('versions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('version');
+
+            $table->integer('document_id')->unsigned();
+            $table->foreign('document_id')->references('id')->on('documents');
+
+            $table->string('version');
             $table->timestamps();
         });
     }

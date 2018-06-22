@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
+use Validator;
 use App\Document;
+use App\Repositories\Users;
 use App\Repositories\Documents;
-use App\Version;
 use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
@@ -13,14 +15,21 @@ class DocumentController extends Controller
      * @var Documents
      */
     private $documents;
+    /**
+     * @var Users
+     */
+    private $user;
 
     /**
      * DocumentController constructor.
+     * @param Documents $documents
+     * @param Users $user
      */
-    public function __construct(Documents $documents)
+    public function __construct(Documents $documents, Users $user)
     {
         $this->middleware('auth');
         $this->documents = $documents;
+        $this->user = $user;
     }
 
     public function index()
@@ -32,42 +41,53 @@ class DocumentController extends Controller
 
     public function show(Document $document) // Document:: find(wildcard);
     {
+//        echo '<pre>';
+//        foreach ($document->document_tags as $tag)
+//        {
+////            dd($tag->tag->name);
+//        }
+//        dd ('die');
+//        dd ($document->tags());
         return view('document.show', compact('document'));
     }
 
     public function create()
     {
-        return view('document.create');
+        $newTags = [];
+        $tags = Tag::latest()->select('name')->get();
+
+        foreach ($tags as $tag) {
+            $newTags[] = $tag->name;
+        }
+
+        return view('document.create', ['tags' => $newTags]);
     }
 
     public function store()
     {
-        $this->validate(request(), [
+        $validator = Validator::make(request()->all(), [
             'title' => 'required',
-            'tags' => 'required',
+            'tags' => 'required|array',
             'content' => 'required'
         ]);
 
-        $document = auth()->user()->publish(
-            new Document(request(['title', 'tags', 'content', 'format', 'permissions']))
-        );
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
 
-        Version::create([
-            'document_id' => $document->id,
-            'version' => 1
-        ]);
+        $this->user->publish(request());
 
-        return redirect('/');
+        return response()->json(['status' => 'Document created!']);
     }
 
     public function edit(Document $document)
     {
-        return view ('document.edit', compact('document'));
+        return view('document.edit', compact('document'));
 
     }
 
     public function update()
     {
-        dd (request());
+        dd(request());
     }
 }

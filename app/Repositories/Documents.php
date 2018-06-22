@@ -10,9 +10,4 @@ class Documents
     {
         return Document::where('user_id', '=', $userId)->latest()->get();
     }
-
-    public function find()
-    {
-
-    }
 }

@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-<?php //dd ($document->author()->name); ?>
 @section('content')
     <div class="album py-5 bg-light">
         <div class="container">
@@ -13,6 +12,9 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $document->title }}</h3>
                             <p class="card-text">{{ $document->content }}</p>
+                            @foreach($document->document_tags as $tag)
+                                <button type="button" class="btn btn-secondary btn-sm" disabled>{{ $tag->tag->name }}</button>
+                            @endforeach
                             <div class="d-flex justify-content-between align-items-end">
                                 <small class="text-muted">Autor: {{ $document->user->name }}</small>
                                 <small class="text-muted">{{ $document->updated_at->toFormattedDateString() }}</small>

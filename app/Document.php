@@ -6,7 +6,7 @@ class Document extends Model
 {
     public function versions()
     {
-        return $this->hasMany(Version::class);
+        return $this->hasMany(Version::class)->orderBy('updated_at', 'desc');
     }
 
     public function user()

@@ -10,7 +10,6 @@
                     <form id="documentForm">
                         {{ csrf_field() }}
                         <input type="hidden" name="format" value="0">
-                        <input type="hidden" name="permissions" value="1">
 
                         <div class="form-group">
                             <label for="title">T&iacute;tulo</label>
@@ -18,7 +17,6 @@
                         </div>
                         <div class="form-group">
                             <label for="tags">Etiquetas</label>
-                            {{--<input type="text" class="form-control" id="tags"name="tags">--}}
                             <div id="tags" class="tag-list" placeholder="Etiquetas" name="tags"></div>
                         </div>
 
@@ -44,56 +42,54 @@
                 </div>
             </div>
         </div>
-
-
+    </div>
         @endsection
-        @section ('myjsscripts')
-            <script>
-                $(function () {
-                    let tagsElements = {!!  json_encode($tags) !!};
-                    let tagsContent = $('#tags').tags({
-                        suggestions: tagsElements,
-                        propmtText: "Tags..."
-                    });
+@section ('myjsscripts')
+    <script>
+        $(function () {
+            let tagsElements = {!!  json_encode($tags) !!};
+            let tagsContent = $('#tags').tags({
+                tagData: ['hola', 'adios'],
+                suggestions: tagsElements,
+                propmtText: "Tags..."
+            });
 
-                    $('#submit').on('click', function (e) {
-                        e.preventDefault();
+            $('#submit').on('click', function (e) {
+                e.preventDefault();
 
-                        let token = '{{ csrf_token() }}';
-                        let title = $('#title').val();
-                        let tags = tagsContent.getTags();
-                        let content = $('#content').val();
+                let token = '{{ csrf_token() }}';
+                let title = $('#title').val();
+                let tags = tagsContent.getTags();
+                let content = $('#content').val();
 
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                            },
-                            type: 'POST',
-                            url: '/documents',
-                            data: {title: title, tags: tags, content: content},
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data.error) {
-                                    printErrorMsg(data.error);
-                                } else {
-                                    window.location.href = '{{ route('home') }}';
-                                }
-                            },
-                            error: function (html, status) {
-                                console.log('pinche error');
-                                console.log(html);
-                                console.log(status);
-                            }
-                        });
-                    });
-
-                    function printErrorMsg(msg) {
-                        $(".print-error-msg").find("ul").html('');
-                        $(".print-error-msg").css('display', 'block');
-                        $.each(msg, function (key, value) {
-                            $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
-                        });
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                    },
+                    type: 'POST',
+                    url: '{{ route('publish_document') }}',
+                    data: {title: title, tags: tags, content: content},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.error) {
+                            printErrorMsg(data.error);
+                        } else {
+                            window.location.href = '{{ route('home') }}';
+                        }
+                    },
+                    error: function (html, status) {
+                        console.log(status);
                     }
                 });
-            </script>
+            });
+
+            function printErrorMsg(msg) {
+                $(".print-error-msg").find("ul").html('');
+                $(".print-error-msg").css('display', 'block');
+                $.each(msg, function (key, value) {
+                    $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+                });
+            }
+        });
+    </script>
 @endsection

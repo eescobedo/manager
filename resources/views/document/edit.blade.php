@@ -84,7 +84,7 @@
                         }
                     },
                     error: function (html, status) {
-                        console.log('pinche error');
+
                         console.log(html);
                         console.log(status);
                     }

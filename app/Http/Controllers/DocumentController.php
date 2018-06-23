@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use PDF;
 use App\Tag;
 use Validator;
@@ -42,7 +43,10 @@ class DocumentController extends Controller
 
     public function show(Document $document) // Document:: find(wildcard);
     {
-        return view('document.show', compact('document'));
+        $users = User::where('id', '!=', auth()->id())->get();
+
+
+        return view('document.show', compact('document', 'users'));
     }
 
     public function create()
@@ -119,5 +123,22 @@ class DocumentController extends Controller
         $pdf = PDF::loadView('document.pdfView', $data);
 
         return $pdf->download($name);
+    }
+
+    public function share()
+    {
+        $validator = Validator::make(request()->all(), [
+            'users' => 'required|array',
+            'type' => 'required|int',
+            'document' => 'required|int',
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+
+        $this->user->share(request());
+
+        return response()->json(['status' => 'Document shared!']);
     }
 }

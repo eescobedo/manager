@@ -142,7 +142,6 @@
                 $("input[name='users_group']:checked").each(function () {
                     users.push($(this).val());
                 });
-                console.log(users);
 
                 let token = '{{ csrf_token() }}';
                 let documentId = {{ $document->id }};
@@ -168,7 +167,7 @@
                         }
                     },
                     error: function (html, status) {
-                        console.log(status);
+                        console.log('generate error');
                     }
                 });
 

@@ -55,12 +55,18 @@ class Users
 
     public function share(Request $request)
     {
+        \Log::info ($request->all());
         $users = $request->get('users');
+
+        foreach ($users as $key => $user) {
+            Permissions::where('user_id', '=', $user)->where('document_id','=', $request->get('document'))->delete();
+        }
 
         foreach ($users as $key => $user) {
             Permissions::create([
                 'user_id' => $user,
-                'permission_type' => $request->get('type')
+                'permission_type' => $request->get('type'),
+                'document_id' => $request->get('document')
             ]);
         }
     }

@@ -37,16 +37,26 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = $this->documents->all(Auth::id());
+        $shared = $this->documents->allShared(Auth::id());
 
-        return view('document.index', compact('documents'));
+        return view('document.index', compact('documents', 'shared'));
     }
 
     public function show(Document $document) // Document:: find(wildcard);
     {
+        $isShared = false;
         $users = User::where('id', '!=', auth()->id())->get();
 
+        if ($document->user_id != auth()->id()){
+            $isShared = true;
+        }
 
-        return view('document.show', compact('document', 'users'));
+        foreach ($document->permissions as $permission) {
+            $authorization = $permission->permission_type;
+        }
+
+
+        return view('document.show', compact('document', 'users', 'isShared', 'authorization'));
     }
 
     public function create()

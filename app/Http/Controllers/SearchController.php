@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Documents;
-use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {

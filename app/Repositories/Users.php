@@ -55,7 +55,6 @@ class Users
 
     public function share(Request $request)
     {
-        \Log::info ($request->all());
         $users = $request->get('users');
 
         foreach ($users as $key => $user) {

@@ -76,7 +76,6 @@
                     data: {title: title, tags: tags, content: content},
                     dataType: 'json',
                     success: function (data) {
-                        console.log('is ok');
                         if (data.error) {
                             printErrorMsg(data.error);
                         } else {

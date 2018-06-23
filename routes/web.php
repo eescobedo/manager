@@ -23,6 +23,7 @@ Route::get('/', 'DocumentController@index')->name('home');
 
 Route::get('/documents/create', 'DocumentController@create')->name('create_document');
 Route::post('/documents', 'DocumentController@store')->name('publish_document');
+Route::post('/documents/share', 'DocumentController@share')->name('share_document');
 
 Route::get('/documents/{document}', 'DocumentController@show')->name('show_document');
 Route::get('/documents/{document}/edit', 'DocumentController@edit');

@@ -20,21 +20,34 @@
                         </div>
                         <div class="card-footer">
                             <div class="">
-                                <a href="/documents/{{$document->id}}/edit">
-                                    <button type="button" class="btn btn-secondary btn-sm">Edit</button>
-                                </a>
-                                <a href="/documents/{{$document->id}}/pdf">
-                                    <button type="button" class="btn btn-primary btn-sm">Download PDF</button>
-                                </a>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"
-                                        data-target="#shareModal">
-                                    Share
-                                </button>
+                                @if(!$isShared)
+                                    <a href="/documents/{{$document->id}}/edit">
+                                        <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                                    </a>
+
+                                    <a href="/documents/{{$document->id}}/pdf">
+                                        <button type="button" class="btn btn-primary btn-sm">Download PDF</button>
+                                    </a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"
+                                            data-target="#shareModal">
+                                        Share
+                                    </button>
+                                @else
+                                    @if ($authorization == 1)
+                                        <a href="/documents/{{$document->id}}/edit">
+                                            <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                                        </a>
+                                    @endif
+                                    <a href="/documents/{{$document->id}}/pdf">
+                                        <button type="button" class="btn btn-primary btn-sm">Download PDF</button>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <div class="comments">
@@ -48,7 +61,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Modal -->
                 <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel"
@@ -125,7 +137,6 @@
                 e.preventDefault();
 
                 let typeShare = $('#typeShare').val();
-                console.log(typeShare);
 
                 let users = [];
                 $("input[name='users_group']:checked").each(function () {

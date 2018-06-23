@@ -3,12 +3,20 @@
 namespace App\Repositories;
 
 use App\Document;
+use App\Permissions;
 
 class Documents
 {
     public function all(int $userId)
     {
         return Document::where('user_id', '=', $userId)->orderBy('updated_at', 'desc')->get();
+    }
+
+    public function allShared(int $userId)
+    {
+        $permissions = Permissions::where('user_id', '=', $userId)->select('document_id')->get();
+
+        return Document::whereIn('id', $permissions->pluck('document_id')->toArray())->orderBy('updated_at', 'desc')->get();
     }
 
     public function search($queryToSearch)

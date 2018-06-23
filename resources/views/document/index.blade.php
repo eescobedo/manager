@@ -8,11 +8,20 @@
                 @foreach($documents as $document)
                     @include('document.single')
                 @endforeach
-                {{--<div class="col-md-12">--}}
-                    {{--<documents></documents> <!-- In index.blade.php -->--}}
-                {{--</div>--}}
-            {{--</div>--}}
+            </div>
+            @if(isset($shared) && count($shared) > 0)
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Shared documents</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach($shared as $document)
+                        @include('document.shared')
+                    @endforeach
+                </div>
+            @endif
         </div>
-    </div>
 
 @endsection

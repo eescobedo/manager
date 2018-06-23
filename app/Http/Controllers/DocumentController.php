@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use App\Repositories\Documents;
-use App\Repositories\Users;
+use App\User;
+use PDF;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Validator;
+use App\Document;
+use App\Repositories\Users;
+use App\Repositories\Documents;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
@@ -36,13 +37,26 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = $this->documents->all(Auth::id());
+        $shared = $this->documents->allShared(Auth::id());
 
-        return view('document.index', compact('documents'));
+        return view('document.index', compact('documents', 'shared'));
     }
 
     public function show(Document $document) // Document:: find(wildcard);
     {
-        return view('document.show', compact('document'));
+        $isShared = false;
+        $users = User::where('id', '!=', auth()->id())->get();
+
+        if ($document->user_id != auth()->id()){
+            $isShared = true;
+        }
+
+        foreach ($document->permissions as $permission) {
+            $authorization = $permission->permission_type;
+        }
+
+
+        return view('document.show', compact('document', 'users', 'isShared', 'authorization'));
     }
 
     public function create()
@@ -109,6 +123,32 @@ class DocumentController extends Controller
         $this->user->modifyPublish(request());
 
         return response()->json(['status' => 'Document updated!']);
+    }
 
+    public function generate(Document $document)
+    {
+        $data = ['title' => $document->title, 'content' => $document->content];
+
+        $name = str_random(30) . '.pdf';
+        $pdf = PDF::loadView('document.pdfView', $data);
+
+        return $pdf->download($name);
+    }
+
+    public function share()
+    {
+        $validator = Validator::make(request()->all(), [
+            'users' => 'required|array',
+            'type' => 'required|int',
+            'document' => 'required|int',
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+
+        $this->user->share(request());
+
+        return response()->json(['status' => 'Document shared!']);
     }
 }

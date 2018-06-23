@@ -24,5 +24,10 @@ class Document extends Model
         return $this->hasMany(DocumentTag::class);
     }
 
+    public function permissions()
+    {
+        return $this->hasMany(Permissions::class);
+    }
+
 
 }

@@ -49,7 +49,6 @@
         $(function () {
             let tagsElements = {!!  json_encode($tags) !!};
             let tagsContent = $('#tags').tags({
-                tagData: ['hola', 'adios'],
                 suggestions: tagsElements,
                 propmtText: "Tags..."
             });

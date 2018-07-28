@@ -76,7 +76,7 @@ class DocumentController extends Controller
         $validator = Validator::make(request()->all(), [
             'title' => 'required',
             'tags' => 'required|array',
-            'content' => 'required'
+//            'content' => 'required'
         ]);
 
         if (!$validator->passes()) {

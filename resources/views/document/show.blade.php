@@ -8,7 +8,7 @@
                     <div class="card mb-8 box-shadow">
                         <div class="card-body">
                             <h3 class="card-title">{{ $document->title }}</h3>
-                            <p class="card-text">{{ $document->content }}</p>
+                            <p class="card-text">{!! $document->content !!}</p>
                             @foreach($document->document_tags as $tag)
                                 <button type="button" class="btn btn-secondary btn-sm"
                                         disabled>{{ $tag->tag->name }}</button>

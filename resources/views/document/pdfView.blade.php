@@ -15,6 +15,6 @@
 </head>
 <body>
     <h2>{{ $title }}</h2>
-    <p>{{ $content }}</p>
+    {!! $content !!}
 </body>
 </html>

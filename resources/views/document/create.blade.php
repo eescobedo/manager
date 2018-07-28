@@ -22,8 +22,7 @@
 
                         <div class="form-group">
                             <label for="content">Contenido</label>
-                            <textarea class="form-control" id="content" placeholder="Contenido"
-                                      name="content"></textarea>
+                            <textarea class="form-control" id="content" placeholder="Contenido" name="content"></textarea>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" id="submit">Create</button>
@@ -47,6 +46,10 @@
 @section ('myjsscripts')
     <script>
         $(function () {
+
+            CKEDITOR.replace( 'content' );
+
+
             let tagsElements = {!!  json_encode($tags) !!};
             let tagsContent = $('#tags').tags({
                 suggestions: tagsElements,
@@ -59,7 +62,7 @@
                 let token = '{{ csrf_token() }}';
                 let title = $('#title').val();
                 let tags = tagsContent.getTags();
-                let content = $('#content').val();
+                let content = CKEDITOR.instances['content'].getData();
 
                 $.ajax({
                     headers: {
@@ -77,6 +80,7 @@
                         }
                     },
                     error: function (html, status) {
+                        console.log(html);
                         console.log(status);
                     }
                 });
